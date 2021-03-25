@@ -34,23 +34,32 @@
     </v-app-bar>
 
     <v-main>
-      <HelloWorld />
+      {{ teste }}
+      <!-- <HelloWorld /> -->
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
 
 export default {
   name: "App",
 
   components: {
-    HelloWorld,
   },
 
   data: () => ({
-    //
+    teste: process.env.VUE_APP_CLIENT_ID
   }),
+
+  created () {
+    this.getProccessEnv()
+  },
+
+  methods: {
+    getProccessEnv () {
+      console.log(process.env.VUE_APP_API_URL)
+    }
+  }
 };
 </script>
