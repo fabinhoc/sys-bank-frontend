@@ -90,13 +90,7 @@ export default {
             scope: "",
           })
           .then((response) => {
-            this.$store.dispatch("SET_AUTH_TOKEN", response.data.access_token);
-            Object.assign(axios.defaults, {
-              headers: {
-                Authorization: `Bearer ${this.$store.state.AUTH_TOKEN}`,
-              },
-            });
-            this.getUser();
+            this.getUser(response.data.access_token);
           })
           .catch((err) => {
             console.log(err);
@@ -105,13 +99,19 @@ export default {
           });
       }
     },
-    async getUser() {
+    async getUser(token) {
+      Object.assign(axios.defaults, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       await axios
         .get("api/user")
         .then((response) => {
           this.disabled = false;
           this.$store.dispatch("SET_AUTH_USER", response.data);
           this.$parent.currentRouter = "/home";
+          this.$store.dispatch("SET_AUTH_TOKEN", token);
           this.$router.push("/home");
         })
         .catch((err) => {

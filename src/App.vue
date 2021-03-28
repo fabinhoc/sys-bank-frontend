@@ -63,19 +63,19 @@
       <v-divider></v-divider>
 
       <v-list nav dense>
-        <v-list-item link>
+        <v-list-item link to="/home">
           <v-list-item-icon>
             <v-icon>mdi-currency-usd</v-icon>
           </v-list-item-icon>
           <v-list-item-title>Meu Saldo</v-list-item-title>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link to="/deposit">
           <v-list-item-icon>
             <v-icon>mdi-beaker-plus</v-icon>
           </v-list-item-icon>
           <v-list-item-title>Meus depósitos</v-list-item-title>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link to="/expense">
           <v-list-item-icon>
             <v-icon>mdi-beaker-minus</v-icon>
           </v-list-item-icon>

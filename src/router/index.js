@@ -16,6 +16,24 @@ const routes = [
       import(/* webpackChunkName: "login" */ "../views/Home.vue"),
   },
   {
+    path: "/expense",
+    name: "expense",
+    meta: {
+      middleware: auth,
+    },
+    component: () =>
+      import(/* webpackChunkName: "login" */ "../views/Expense.vue"),
+  },
+  {
+    path: "/deposit",
+    name: "deposit",
+    meta: {
+      middleware: auth,
+    },
+    component: () =>
+      import(/* webpackChunkName: "login" */ "../views/Deposit.vue"),
+  },
+  {
     path: "/login",
     name: "login",
     component: () =>
