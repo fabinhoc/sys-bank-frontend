@@ -58,7 +58,6 @@ export default {
   },
   methods: {
     async getDataDeposits() {
-      console.log(axios.defaults);
       this.loadingDeposit = true;
       await axios.get("api/expenses").then((response) => {
         this.loadingDeposit = false;
