@@ -82,6 +82,7 @@ export default {
         await axios
           .post("api/expenses", data)
           .then(() => {
+            this.changeAccount();
             this.disabled = false;
             this.$emit("restart");
             this.clearForm();
@@ -114,6 +115,23 @@ export default {
       } else {
         return number;
       }
+    },
+    async changeAccount() {
+      const account = this.$store.state.AUTH_USER.account;
+      const user_id = this.$store.state.AUTH_USER.id;
+      const total =
+        parseFloat(account.total) - this.formattFloatNumber(this.expense.price);
+      await axios
+        .put(`api/accounts/${account.id}`, { total: total, user_id: user_id })
+        .then(() => {
+          this.getUser();
+        });
+    },
+    async getUser() {
+      // axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      await axios.get("api/user").then((response) => {
+        this.$store.dispatch("SET_AUTH_USER", response.data);
+      });
     },
   },
 };

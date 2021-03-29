@@ -6,7 +6,11 @@
           <div>
             <v-icon class="text-center" size="109">mdi-account-circle</v-icon>
             <p class="font-weight-light text-upper text-uppercase">meu saldo</p>
-            <h1><span class="green--text">R$12,89</span></h1>
+            <h1>
+              <span class="green--text">
+                R$ {{ $store.state.AUTH_USER.account.total }}
+              </span>
+            </h1>
           </div>
           <br />
           <v-divider />
@@ -21,11 +25,21 @@
               <v-divider />
             </v-col>
             <v-col cols="12" lg="6" md="6" sm="12" xs="12">
-              <p>Despesas</p>
+              <p>
+                <span>
+                  <v-icon color="red">mdi-minus</v-icon>
+                  Despesas
+                </span>
+              </p>
               <Expenses :data.sync="dataExpense" :loading="loadingExpense" />
             </v-col>
             <v-col cols="12" lg="6" md="6" sm="12" xs="12">
-              <p>Depósitos</p>
+              <p>
+                <span>
+                  <v-icon color="green">mdi-plus</v-icon>
+                  Depósitos
+                </span>
+              </p>
               <Deposits :data.sync="dataDeposit" :loading="loadingDeposit" />
             </v-col>
           </v-row>
@@ -59,7 +73,7 @@ export default {
   methods: {
     async getDataDeposits() {
       this.loadingDeposit = true;
-      await axios.get("api/expenses").then((response) => {
+      await axios.get("api/deposits").then((response) => {
         this.loadingDeposit = false;
         this.dataDeposit = response.data;
       });

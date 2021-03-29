@@ -100,15 +100,18 @@ export default {
       }
     },
     async getUser(token) {
-      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-      console.log(token);
+      // axios.defaults.headers.common["Authorization"] = "Bearer " + token;
       await axios
-        .get("api/user")
+        .get("api/user", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        })
         .then((response) => {
           this.disabled = false;
           this.$store.dispatch("SET_AUTH_USER", response.data);
-          this.$parent.currentRouter = "/home";
           this.$store.dispatch("SET_AUTH_TOKEN", token);
+          this.$parent.currentRouter = "/home";
           this.$router.push("/home");
         })
         .catch((err) => {
