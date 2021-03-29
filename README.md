@@ -1,8 +1,8 @@
-<p align="center"><a href="https://laravel.com" target="_blank">
-<img src="https://github.com/fabinhoc/sys-bank-frontend/tree/main/src/assets/logo-purple.png" width="100">
+<p align="center">
+<img src="https://github.com/fabinhoc/sys-bank-frontend/blob/main/src/assets/logo-purple.png" width="100">
 <br>
 <span style="color:white">SYSBANK</span>
-</a></p>
+</p>
 
 ## Pré-requisitos
 O projeto foi desenvolvido utilizando o [VUEjs](https://vuejs.org/) um framework javascript progressivo.
@@ -34,7 +34,7 @@ yarn serve
 Acesse a url
 http://localhost:8080/login
 
-![image-page-login](https://github.com/fabinhoc/sys-bank-frontend/tree/main/src/assets/login-page.PNG)
+![image-page-login](https://github.com/fabinhoc/sys-bank-frontend/blob/main/src/assets/login-page.PNG)
 
 ## Repositório do backend
 Acesse este repositório [https://github.com/fabinhoc/sys-bank](https://github.com/fabinhoc/sys-bank) para ter acesso ao backend do projeto.
