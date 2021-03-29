@@ -6,14 +6,14 @@
           <v-card>
             <v-card-text>
               <v-col cols="12" lg="12" md="12" sm="12" xs="12">
-                <DepositForm />
+                <DepositForm @restart="getData()" />
               </v-col>
               <v-col cols="12" lg="12" md="12" sm="12" xs="12">
                 Depósitos
                 <v-divider></v-divider>
               </v-col>
               <v-col cols="12" lg="12" md="12" sm="12" xs="12">
-                <Deposits />
+                <Deposits :data.sync="data" :loading="loading" />
               </v-col>
             </v-card-text>
           </v-card>
@@ -26,6 +26,7 @@
 <script>
 import DepositForm from "../components/DepositForm";
 import Deposits from "../components/Deposits";
+import axios from "axios";
 
 export default {
   name: "Deposit",
@@ -33,6 +34,23 @@ export default {
     DepositForm,
     Deposits,
   },
-  data: () => ({}),
+  data: () => ({
+    data: [],
+    loading: false,
+  }),
+  created() {
+    this.getData();
+  },
+  methods: {
+    async getData() {
+      this.loading = true;
+      axios.defaults.headers.common["Authorization"] =
+        "Bearer " + this.$store.state.AUTH_TOKEN;
+      await axios.get("api/deposits").then((response) => {
+        this.loading = false;
+        this.data = response.data;
+      });
+    },
+  },
 };
 </script>

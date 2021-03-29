@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from "axios";
 
 Vue.use(Vuex);
 
@@ -12,6 +13,11 @@ export default new Vuex.Store({
     SET_AUTH_TOKEN: (state, payload) => {
       state.AUTH_TOKEN = payload;
       localStorage.setItem("token", payload);
+      Object.assign(axios.defaults, {
+        headers: {
+          Authorization: `Bearer ${payload}`,
+        },
+      });
     },
     SET_AUTH_USER: (state, payload) => {
       state.AUTH_USER = payload;

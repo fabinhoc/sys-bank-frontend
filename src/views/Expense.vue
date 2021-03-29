@@ -6,14 +6,14 @@
           <v-card>
             <v-card-text>
               <v-col cols="12" lg="12" md="12" sm="12" xs="12">
-                <ExpenseForm />
+                <ExpenseForm @restart="getData()" />
               </v-col>
               <v-col cols="12" lg="12" md="12" sm="12" xs="12">
                 Despesas
                 <v-divider></v-divider>
               </v-col>
               <v-col cols="12" lg="12" md="12" sm="12" xs="12">
-                <Expenses />
+                <Expenses :data.sync="data" :loading="loading" />
               </v-col>
             </v-card-text>
           </v-card>
@@ -26,6 +26,7 @@
 <script>
 import ExpenseForm from "../components/ExpenseForm";
 import Expenses from "../components/Expenses";
+import axios from "axios";
 
 export default {
   name: "Expense",
@@ -33,6 +34,20 @@ export default {
     ExpenseForm,
     Expenses,
   },
-  data: () => ({}),
+  data: () => ({
+    data: [],
+    loading: false,
+  }),
+  methods: {
+    async getData() {
+      this.loading = true;
+      axios.defaults.headers.common["Authorization"] =
+        "Bearer " + this.$store.state.AUTH_TOKEN;
+      await axios.get("api/expenses").then((response) => {
+        this.loading = false;
+        this.data = response.data;
+      });
+    },
+  },
 };
 </script>

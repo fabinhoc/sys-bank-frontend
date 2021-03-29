@@ -1,6 +1,6 @@
 <template>
   <div class="expenseForm">
-    <v-form ref="expenseForm">
+    <v-form ref="expenseForm" @submit="save">
       <v-row>
         <v-col>
           <v-text-field
@@ -26,7 +26,16 @@
       </v-row>
       <v-row>
         <v-col>
-          <v-btn color="primary" class="mr-2" small>Salvar</v-btn>
+          <v-btn
+            type="submit"
+            color="primary"
+            class="mr-2"
+            :loading="loading"
+            :disabled="validForm && disabled"
+            small
+          >
+            Salvar
+          </v-btn>
           <v-btn color="default" small>Limpar</v-btn>
         </v-col>
       </v-row>
@@ -35,6 +44,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "ExpenseForm",
   components: {},
@@ -52,15 +63,44 @@ export default {
       distractionFree: false,
       valueRange: { max: 99999999 },
     },
+    validForm: true,
+    loading: false,
+    disabled: false,
   }),
   methods: {
-    save() {
+    async save(e) {
+      e.preventDefault();
       if (this.$refs.expenseForm.validate()) {
-        console.log("save here");
+        this.disabled = true;
+        this.loading = true;
+        axios.defaults.headers.common["Authorization"] =
+          "Bearer " + this.$store.state.AUTH_TOKEN;
+
+        const data = {
+          name: this.expense.name,
+          price: this.formattFloatNumber(this.expense.price),
+          user_id: this.$store.state.AUTH_USER.id,
+        };
+
+        await axios
+          .post("api/expenses", data)
+          .then(() => {
+            this.disabled = false;
+            this.$emit("restart");
+            this.clearForm();
+            this.loading = false;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     },
     clearForm() {
       this.$refs.expenseForm.reset();
+      this.expense = {
+        name: "",
+        price: 0,
+      };
     },
     formattFloatNumber(number) {
       if (typeof number === "string") {
