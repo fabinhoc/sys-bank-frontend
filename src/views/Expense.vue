@@ -4,6 +4,7 @@
       <v-row>
         <v-col cols="12" lg="12" md="12" sm="12" xs="12">
           <v-card>
+            <v-card-title>Despesas</v-card-title>
             <v-card-text>
               <v-col cols="12" lg="12" md="12" sm="12" xs="12">
                 <ExpenseForm @restart="getData()" />
@@ -26,7 +27,7 @@
 <script>
 import ExpenseForm from "../components/ExpenseForm";
 import Expenses from "../components/Expenses";
-import axios from "axios";
+import axios from "../plugins/axios";
 
 export default {
   name: "Expense",
@@ -38,11 +39,12 @@ export default {
     data: [],
     loading: false,
   }),
+  created() {
+    this.getData();
+  },
   methods: {
     async getData() {
       this.loading = true;
-      axios.defaults.headers.common["Authorization"] =
-        "Bearer " + this.$store.state.AUTH_TOKEN;
       await axios.get("api/expenses").then((response) => {
         this.loading = false;
         this.data = response.data;

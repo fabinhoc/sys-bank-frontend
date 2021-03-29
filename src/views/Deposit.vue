@@ -4,6 +4,7 @@
       <v-row>
         <v-col cols="12" lg="12" md="12" sm="12" xs="12">
           <v-card>
+            <v-card-title>Depósitos</v-card-title>
             <v-card-text>
               <v-col cols="12" lg="12" md="12" sm="12" xs="12">
                 <DepositForm @restart="getData()" />
@@ -44,8 +45,6 @@ export default {
   methods: {
     async getData() {
       this.loading = true;
-      axios.defaults.headers.common["Authorization"] =
-        "Bearer " + this.$store.state.AUTH_TOKEN;
       await axios.get("api/deposits").then((response) => {
         this.loading = false;
         this.data = response.data;

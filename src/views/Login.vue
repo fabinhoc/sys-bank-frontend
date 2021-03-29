@@ -100,11 +100,8 @@ export default {
       }
     },
     async getUser(token) {
-      Object.assign(axios.defaults, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      console.log(token);
       await axios
         .get("api/user")
         .then((response) => {
@@ -115,6 +112,8 @@ export default {
           this.$router.push("/home");
         })
         .catch((err) => {
+          this.disabled = false;
+          this.error = true;
           console.log(err);
         });
     },

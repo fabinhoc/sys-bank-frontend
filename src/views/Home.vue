@@ -21,10 +21,12 @@
               <v-divider />
             </v-col>
             <v-col cols="12" lg="6" md="6" sm="12" xs="12">
-              <Expenses />
+              <p>Despesas</p>
+              <Expenses :data.sync="dataExpense" :loading="loadingExpense" />
             </v-col>
             <v-col cols="12" lg="6" md="6" sm="12" xs="12">
-              <Deposits />
+              <p>Depósitos</p>
+              <Deposits :data.sync="dataDeposit" :loading="loadingDeposit" />
             </v-col>
           </v-row>
         </v-card-actions>
@@ -36,12 +38,40 @@
 <script>
 import Expenses from "../components/Expenses";
 import Deposits from "../components/Deposits";
+import axios from "../plugins/axios";
 
 export default {
   name: "Home",
   components: {
     Expenses,
     Deposits,
+  },
+  data: () => ({
+    dataDeposit: [],
+    loadingDeposit: false,
+    dataExpense: [],
+    loadingExpense: false,
+  }),
+  created() {
+    this.getDataDeposits();
+    this.getDataExpenses();
+  },
+  methods: {
+    async getDataDeposits() {
+      console.log(axios.defaults);
+      this.loadingDeposit = true;
+      await axios.get("api/expenses").then((response) => {
+        this.loadingDeposit = false;
+        this.dataDeposit = response.data;
+      });
+    },
+    async getDataExpenses() {
+      this.loadingExpense = true;
+      await axios.get("api/expenses").then((response) => {
+        this.loadingExpense = false;
+        this.dataExpense = response.data;
+      });
+    },
   },
 };
 </script>

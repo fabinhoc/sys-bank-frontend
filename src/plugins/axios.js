@@ -5,6 +5,8 @@ axios.defaults.baseURL = process.env.VUE_APP_API_URL;
 // axios.interceptors.request.use(function (config) {
 //   return config;
 // });
+axios.defaults.headers.common["Authorization"] =
+  "Bearer " + localStorage.getItem("token");
 
 axios.interceptors.response.use(
   (response) => {
@@ -16,3 +18,5 @@ axios.interceptors.response.use(
     }
   }
 );
+
+export default axios;

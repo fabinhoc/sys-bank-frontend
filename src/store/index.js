@@ -27,6 +27,12 @@ export default new Vuex.Store({
       state.AUTH_TOKEN = localStorage.getItem("token");
       state.AUTH_USER = JSON.parse(localStorage.getItem("authUser"));
     },
+    LOGOUT: (state) => {
+      state.AUTH_TOKEN = {};
+      state.AUTH_TOKEN = "";
+      localStorage.removeItem("token");
+      localStorage.removeItem("authUser");
+    },
   },
   actions: {
     // SET_AUTH_TOKEN({ commit }) {
@@ -40,6 +46,9 @@ export default new Vuex.Store({
     },
     SET_LOCAL_STORAGE_VALUES: (context) => {
       context.commit("SET_LOCAL_STORAGE_VALUES");
+    },
+    LOGOUT: (context) => {
+      context.commit("LOGOUT");
     },
   },
   modules: {},

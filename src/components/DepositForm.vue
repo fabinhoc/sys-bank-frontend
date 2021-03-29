@@ -72,9 +72,6 @@ export default {
       if (this.$refs.depositForm.validate()) {
         this.disabled = true;
         this.loading = true;
-        axios.defaults.headers.common["Authorization"] =
-          "Bearer " + this.$store.state.AUTH_TOKEN;
-
         const data = {
           name: this.deposit.name,
           price: this.formattFloatNumber(this.deposit.price),

@@ -27,7 +27,7 @@
       <a icon href="https://github.com/fabinhoc/sys-bank" target="_blank" text>
         <v-icon>mdi-github</v-icon>
       </a>
-      <v-btn icon to="/home" title="Sair">
+      <v-btn @click="logout" icon title="Sair">
         <v-icon>mdi-logout-variant</v-icon>
       </v-btn>
     </v-app-bar>
@@ -144,6 +144,10 @@ export default {
           this.$router.push("/home");
         }
       }
+    },
+    logout() {
+      this.$store.dispatch("LOGOUT");
+      this.$router.push("/login");
     },
   },
 };
